@@ -16,3 +16,8 @@ primes = json.loads(open("../datasets/primes.json", "r").read())
 #   2. Classifying a number as a prime.
 # - Regarding dist of primes, for n, the # of primes
 #   below it is ~ 1/ln(n), natural log. Eulers number. Interesting.
+
+# Solve for:
+# - fx = x first.
+# - fx = 2x second.
+# - fx = next prime. (lol)
