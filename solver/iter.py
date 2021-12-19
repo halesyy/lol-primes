@@ -3,6 +3,9 @@ import json
 
 primes = json.loads(open("../datasets/primes.json", "r").read())
 
+# Current state:
+# https://www.quora.com/Could-you-train-a-machine-learner-to-predict-the-next-prime-number-I-know-there-is-no-pattern-to-PNs-I-am-wondering-if-the-ML-would-figure-it-out
+
 # Conceptions:
 # - Are primes a graphical pattern?
 # - If they follow a pattern, where is it?
