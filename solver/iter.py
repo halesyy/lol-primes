@@ -11,3 +11,5 @@ primes = json.loads(open("../datasets/primes.json", "r").read())
 # - Diff between:
 #   1. Predicting the next prime.
 #   2. Classifying a number as a prime.
+# - Regarding dist of primes, for n, the # of primes
+#   below it is ~ 1/ln(n), natural log. Eulers number. Interesting.
