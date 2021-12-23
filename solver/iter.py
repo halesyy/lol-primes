@@ -1,7 +1,7 @@
 
 import json
 from py_expression_eval import Parser
-from random import randint
+from random import randint, choice
 
 primes = json.loads(open("../datasets/primes.json", "r").read())
 
@@ -49,8 +49,25 @@ eval = lambda ex, sub={}: mp.parse(ex).evaluate(sub)
 
 v1 = eval("5*2*x", {"x": 5})
 
+def make_strand(length):
+    strand = ["a"]
+    for _ in range(length):
+        allow_g = strand[-1] == "a"
+        if allow_g:
+            strand.append(choice(["a", "g"]))
+        else:
+            strand.append("a")
+    if strand[-1] == "g":
+        strand = strand[0:-1]
+    return strand
+
+
 def make_eq():
     # make line of aaagaaaga where
     # g can only be between a, like DNA
-    # can we have a 4-type? brackets?
+    # can we have a 4-type? brackets? bo/bc?
     length = randint(1, 100)
+    strand = make_strand(length)
+
+
+make_eq()
