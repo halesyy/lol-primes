@@ -60,9 +60,13 @@ meta = {
 }
 
 mp = Parser()
-eval = lambda ex, sub={}: mp.parse(ex).evaluate(sub)
 
-v1 = eval("5*2*x", {"x": 5})
+def eval(ex, sub={}):
+    try:
+        response = mp.parse(ex).evaluate(sub)
+        return response
+    except:
+        return None
 
 def make_strand(length):
     strand = ["a"]
