@@ -122,9 +122,15 @@ def make_eq():
     length = 10
     strand = make_strand(length)
     equation = supplement(strand)
-    # equation = "E PI"
-    print(strand)
-    print(equation)
-    eval(equation, {"x": 1, "y": 2})
+    # Great.
+    response = eval(equation, {"x": 1, "y": 2})
+    if response == None:
+        return None
+    else:
+        return equation
 
-make_eq()
+
+if __name__ == "__main__":
+    while True:
+        eq = make_eq()
+        print(eq)
