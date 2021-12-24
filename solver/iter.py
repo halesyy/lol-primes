@@ -119,7 +119,7 @@ def make_eq():
     # g can only be between a, like DNA
     # can we have a 4-type? brackets? bo/bc?
     length = randint(1, 100)
-    length = 10
+    # length = 10
     strand = make_strand(length)
     equation = supplement(strand)
     # Great.
