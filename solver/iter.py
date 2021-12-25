@@ -114,6 +114,8 @@ def supplement(strand):
         given_eq += " "
     return given_eq
 
+# WE STILL NEED TO ADD RANDOM CONSTANTS!!!!!
+
 def make_eq():
     # make line of aaagaaaga where
     # g can only be between a, like DNA
