@@ -167,12 +167,15 @@ def series_explode(eq):
             # Setting up randoms.
             # iter_by = gauss(0, 10) if random() < 0.5 else randint(-50, 50) # 0.zf9q2809as or -50>50
             iter_by = gauss(0, 10)
+            # iter_by = gauss(0.761766754823357, 0.015)
             # iter_by = 1
             iter_x = 1
             x = []
             y = []
             # Build XY sequence for comparison to series.
             y_eq_sub = gauss(0, 5)
+            # y_eq_sub = gauss(1.9231310589467212, 0.012)
+
             for _ in range(len(series)):
                 x_val = iter_x*iter_by
                 x.append(x_val)
@@ -192,16 +195,16 @@ def series_explode(eq):
                 last_cy, last_ry = y[i-1], series[i-1]
                 # Calculate the absolute percentage error.
                 try:
-                    real_cdiff = (cy/last_cy)-1 # Created.
-                    real_rdiff = (ry/last_ry)-1 # Real.
-                    perc_err = abs(real_cdiff - real_rdiff)
+                    # real_cdiff = (cy/last_cy)-1 # Created.
+                    # real_rdiff = (ry/last_ry)-1 # Real.
+                    # perc_err = abs(real_cdiff - real_rdiff)
                     # perc_err = abs((real_cdiff/real_rdiff)-1)
-                    # ind_error = abs(cy - ry)
+                    ind_error = abs(cy - ry)
                     # perc_err =
                 except:
                     return False
                 # error.append(perc_err)
-                error += perc_err
+                error += ind_error
             # Check compared.
             # ape_score = sum(error)/len(error)
             ape_score = error
@@ -213,7 +216,8 @@ def iterator():
     while True:
         # eq = make_eq()
         # eq = "E + x * log(x, y)"
-        eq = "E ^ cos(x) + E * x"
+        # eq = "PI * sin(x) * tan(x) - -132.24582462308788 * tan(x)"
+        eq = "E + x * log(x, y)"
         # eq = "x / PI * E - log(x, y)"
         # eq = "x + sin(x)"
         # eq = "x + PI / 25.937443316566345 / tan(x) * E + tan(x) / tan(x)"
@@ -224,7 +228,7 @@ from multiprocessing import Process
 
 if __name__ == "__main__":
     workers = []
-    for _ in range(6):
+    for _ in range(3):
         workers.append(Process(target=iterator))
     for task in workers:
         task.start()
