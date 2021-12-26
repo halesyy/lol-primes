@@ -154,22 +154,23 @@ def series_explode(eq):
     # All series to test.
     test_series = [
         primes,
-        primes_diff,
-        primes_diff,
-        primes_diff_diff,
-        primes_diff_diff_diff
+        # primes_diff,
+        # primes_diff,
+        # primes_diff_diff,
+        # primes_diff_diff_diff
     ]
 
     # Iterate.
     for _ in range(4): # 20. Computationally hyper-expensive.
         for sx, series in enumerate(test_series): # do random series 10k times
             # Setting up randoms.
-            iter_by = gauss(0, 10) if random() < 0.5 else randint(-50, 50) # 0.zf9q2809as or -50>50
+            # iter_by = gauss(0, 10) if random() < 0.5 else randint(-50, 50) # 0.zf9q2809as or -50>50
+            iter_by = gauss(0, 10)
             iter_x = 1
             x = []
             y = []
             # Build XY sequence for comparison to series.
-            y_eq_sub = gauss(0, 100)
+            y_eq_sub = gauss(0, 5)
             for _ in range(len(series)):
                 x_val = iter_x*iter_by
                 x.append(x_val)
@@ -206,18 +207,29 @@ def series_explode(eq):
                 best_error = ape_score
                 print(f"> new b/e: {ape_score}. eq: {eq}, iter_by: {iter_by}, y_eq_sub: {y_eq_sub}, series 0-5: {series[0:5]} ({sx})")
 
-if __name__ == "__main__":
-
-    # eqs = [make_eq() for _ in range(1000)]
-
+def iterator():
     while True:
-        eq = make_eq()
-        # eq = "PI + x * -77.10565555763374"
-        if eq != None:
-            series_explode(eq)
-    # print(eq)
+        # eq = make_eq()
+        eq = "E + x * log(x, y)"
+        # eq = "x / PI * E - log(x, y)"
+        # eq = "x + sin(x)"
+        # eq = "x + PI / 25.937443316566345 / tan(x) * E + tan(x) / tan(x)"
+        if eq != None: series_explode(eq)
 
-    # print(sum([True for e in eqs if e == None]))
+
+from multiprocessing import Process
+
+if __name__ == "__main__":
+    workers = []
+    for _ in range(4):
+        workers.append(Process(target=iterator))
+    for task in workers:
+        task.start()
+
+
+    # while True:
+    #     # eq = make_eq()
+    #     # eq = "PI * x * sin(x) / sin(x) + E"
+    #     eq = "E + x * log(x, y)"
     #     if eq != None:
-    #         print(eq)
-            # sleep(0.1)
+    #         series_explode(eq)
