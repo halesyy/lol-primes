@@ -167,6 +167,7 @@ def series_explode(eq):
             # Setting up randoms.
             # iter_by = gauss(0, 10) if random() < 0.5 else randint(-50, 50) # 0.zf9q2809as or -50>50
             iter_by = gauss(0, 10)
+            # iter_by = 0.7484424592719056
             # iter_by = gauss(0.761766754823357, 0.015)
             # iter_by = 1
             iter_x = 1
@@ -174,6 +175,7 @@ def series_explode(eq):
             y = []
             # Build XY sequence for comparison to series.
             y_eq_sub = gauss(0, 5)
+            # y_eq_sub = 1.9096995172411513
             # y_eq_sub = gauss(1.9231310589467212, 0.012)
 
             for _ in range(len(series)):
@@ -214,10 +216,10 @@ def series_explode(eq):
 
 def iterator():
     while True:
-        # eq = make_eq()
+        eq = make_eq()
         # eq = "E + x * log(x, y)"
         # eq = "PI * sin(x) * tan(x) - -132.24582462308788 * tan(x)"
-        eq = "E + x * log(x, y)"
+        # eq = "E + x * log(x, y)"
         # eq = "x / PI * E - log(x, y)"
         # eq = "x + sin(x)"
         # eq = "x + PI / 25.937443316566345 / tan(x) * E + tan(x) / tan(x)"

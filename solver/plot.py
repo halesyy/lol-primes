@@ -14,6 +14,7 @@ def eval(ex, sub={}):
 
 # Data iq for iteration.
 primes = json.loads(open("../datasets/primes_test.json", "r").read())
+primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
 print(">", len(primes), "total primes")
 eq = "E + x * log(x, y)"
 # eq = "x"
@@ -22,10 +23,10 @@ eq = "E + x * log(x, y)"
 
 # Equation setup.
 # iter_by = 0.4367004244643913
-iter_by = 0.7574952232242118
+iter_by = 0.7484424592719056
 # iter_by = 1.4
 iter_x = 1
-y_eq_sub = 1.9047182329521957
+y_eq_sub = 1.9096995172411513
 # y_eq_sub = 1.364252198866775
 
 # Setup
