@@ -162,7 +162,7 @@ def series_explode(eq):
 
     # Iterate.
     for _ in range(4): # 20. Computationally hyper-expensive.
-        for series in test_series: # do random series 10k times
+        for sx, series in enumerate(test_series): # do random series 10k times
             # Setting up randoms.
             iter_by = gauss(0, 10) if random() < 0.5 else randint(-50, 50) # 0.zf9q2809as or -50>50
             iter_x = 1
@@ -192,6 +192,7 @@ def series_explode(eq):
                     real_cdiff = (cy/last_cy)-1 # Created.
                     real_rdiff = (ry/last_ry)-1 # Real.
                     perc_err = abs(real_cdiff - real_rdiff)
+                    # perc_err = abs((real_cdiff/real_rdiff)-1)
                     # ind_error = abs(cy - ry)
                     # perc_err =
                 except:
@@ -203,15 +204,15 @@ def series_explode(eq):
             ape_score = error
             if ape_score < best_error:
                 best_error = ape_score
-                print(f"> new b/e: {ape_score}. eq: {eq}, iter_by: {iter_by}, y_eq_sub: {y_eq_sub}, series 0-5: {series[0:5]}")
+                print(f"> new b/e: {ape_score}. eq: {eq}, iter_by: {iter_by}, y_eq_sub: {y_eq_sub}, series 0-5: {series[0:5]} ({sx})")
 
 if __name__ == "__main__":
 
     # eqs = [make_eq() for _ in range(1000)]
 
     while True:
-        # eq = make_eq()
-        eq = "PI + x * -77.10565555763374"
+        eq = make_eq()
+        # eq = "PI + x * -77.10565555763374"
         if eq != None:
             series_explode(eq)
     # print(eq)
