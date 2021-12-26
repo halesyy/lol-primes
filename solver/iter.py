@@ -212,7 +212,8 @@ def series_explode(eq):
 def iterator():
     while True:
         # eq = make_eq()
-        eq = "E + x * log(x, y)"
+        # eq = "E + x * log(x, y)"
+        eq = "E ^ cos(x) + E * x"
         # eq = "x / PI * E - log(x, y)"
         # eq = "x + sin(x)"
         # eq = "x + PI / 25.937443316566345 / tan(x) * E + tan(x) / tan(x)"
@@ -223,7 +224,7 @@ from multiprocessing import Process
 
 if __name__ == "__main__":
     workers = []
-    for _ in range(7):
+    for _ in range(6):
         workers.append(Process(target=iterator))
     for task in workers:
         task.start()

@@ -5,5 +5,7 @@
 
 # 1b iteration in Python takes 39 seconds.
 
+# Try using prime-gen.
+
 for _ in range(1_000_000_000):
     pass
