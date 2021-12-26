@@ -166,7 +166,8 @@ def series_explode(eq):
         for sx, series in enumerate(test_series): # do random series 10k times
             # Setting up randoms.
             # iter_by = gauss(0, 10) if random() < 0.5 else randint(-50, 50) # 0.zf9q2809as or -50>50
-            iter_by = gauss(0, 10)
+            # iter_by = gauss(0, 10)
+            iter_by = 1
             # iter_by = 0.7484424592719056
             # iter_by = gauss(0.761766754823357, 0.015)
             # iter_by = 1
@@ -174,7 +175,8 @@ def series_explode(eq):
             x = []
             y = []
             # Build XY sequence for comparison to series.
-            y_eq_sub = gauss(0, 5)
+            # y_eq_sub = gauss(0, 10)
+            y_eq_sub = gauss(2.405480398862396, 0.01)
             # y_eq_sub = 1.9096995172411513
             # y_eq_sub = gauss(1.9231310589467212, 0.012)
 
@@ -182,6 +184,7 @@ def series_explode(eq):
                 x_val = iter_x*iter_by
                 x.append(x_val)
                 y_val = eval(eq, {"x": x_val, "y": y_eq_sub})
+                # y_val = round(y_val)
                 if y_val == None:
                     y_val = 0
                 y.append(y_val)
@@ -218,6 +221,7 @@ def iterator():
     while True:
         eq = make_eq()
         # eq = "E + x * log(x, y)"
+        eq = "E + x * log(x, y) - 0.08584*x"
         # eq = "PI * sin(x) * tan(x) - -132.24582462308788 * tan(x)"
         # eq = "E + x * log(x, y)"
         # eq = "x / PI * E - log(x, y)"
@@ -230,7 +234,7 @@ from multiprocessing import Process
 
 if __name__ == "__main__":
     workers = []
-    for _ in range(3):
+    for _ in range(5):
         workers.append(Process(target=iterator))
     for task in workers:
         task.start()
