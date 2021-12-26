@@ -15,9 +15,9 @@ def is_prime(n):
             return False
     return True
 
-for i in range(10000):
+for i in range(100000):
     if is_prime(i):
         dc.append(i) # Since prime. Divide checks.
         primes.append(i)
 
-open("primes.json", "w").write(json.dumps(primes))
+open("primes_test.json", "w").write(json.dumps(primes))
