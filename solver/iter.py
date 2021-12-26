@@ -5,7 +5,8 @@ from time import sleep
 from py_expression_eval import Parser
 from random import randint, choice, random, gauss
 
-primes = json.loads(open("../datasets/primes.json", "r").read())
+# primes = json.loads(open("../datasets/primes.json", "r").read())
+primes = json.loads(open("../datasets/primes_test.json", "r").read())
 primes_diff = json.loads(open("../datasets/primes_diff.json", "r").read())
 primes_diff_diff = json.loads(open("../datasets/primes_diff_diff.json", "r").read())
 primes_diff_diff_diff = json.loads(open("../datasets/primes_diff_diff_diff.json", "r").read())
@@ -166,6 +167,7 @@ def series_explode(eq):
             # Setting up randoms.
             # iter_by = gauss(0, 10) if random() < 0.5 else randint(-50, 50) # 0.zf9q2809as or -50>50
             iter_by = gauss(0, 10)
+            # iter_by = 1
             iter_x = 1
             x = []
             y = []
@@ -221,7 +223,7 @@ from multiprocessing import Process
 
 if __name__ == "__main__":
     workers = []
-    for _ in range(4):
+    for _ in range(7):
         workers.append(Process(target=iterator))
     for task in workers:
         task.start()

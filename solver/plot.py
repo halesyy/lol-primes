@@ -18,9 +18,9 @@ print(">", len(primes), "total primes")
 eq = "E + x * log(x, y)"
 
 # Equation setup.
-iter_by = 0.8323181983046214
+iter_by = 1
 iter_x = 1
-y_eq_sub = 2.0223733769290027
+y_eq_sub = 2.718
 
 # Setup
 iterations = len(primes)
