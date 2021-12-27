@@ -40,7 +40,7 @@ def error(eq, x, y):
         iter_x += 1
     return running_error
 
-print(error(eq, 2, 6.73))
+print(error(eq, 1.88, 6))
 exit()
 
 # A generator which can yield parameters,
