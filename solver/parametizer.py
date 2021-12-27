@@ -29,7 +29,12 @@ eq = "x * log(x, y)"
 
 # Best for first 1,229 primes: 1.8778, 5.9901, err = 23,273.
 # Best for first 2,458 primes: 3.0000, 20.250, err = 135,719.
-# Best for first 3,687 primes:
+# Best for first 3,687 primes: 4.0000, 61.430, err = 350,829.
+
+# Form deltas:
+# 1.6 x, 3.38 x, 5.83 x
+# 1.3 x, 3.03 x, 2.59 x
+
 
 def error(eq, x, y):
     # X = iter by. Running * x.
