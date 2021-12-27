@@ -40,8 +40,8 @@ def error(eq, x, y):
         iter_x += 1
     return running_error
 
-# print(error(eq, 2, 6.73))
-# exit()
+print(error(eq, 2, 6.73))
+exit()
 
 # A generator which can yield parameters,
 # for a lower memory footprint.
