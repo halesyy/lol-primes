@@ -2,6 +2,7 @@
 import json
 from time import sleep
 from py_expression_eval import Parser
+from math import ceil, floor
 parser = Parser()
 primes = json.loads(open("../datasets/primes.json", "r").read())
 
@@ -21,7 +22,8 @@ Then, plot the results.
 """
 
 # Equation used.
-eq = "E + x * log(x, y)"
+eq = "x * log(x, y)"
+
 
 def error(eq, x, y):
     # X = iter by. Running * x.
@@ -32,17 +34,18 @@ def error(eq, x, y):
         x_val = iter_x * x
         y_val = eval(eq, {"x": x_val, "y": y})
         if y_val == None: return ""
+        # y_val = floor(y_val)
         error = abs(y_val - prime)
         running_error += error
         iter_x += 1
     return running_error
 
-print(error(eq, 0.00001, 0.1))
-exit()
+# print(error(eq, 2, 7))
+# exit()
 
 # A generator which can yield parameters,
 # for a lower memory footprint.
-def make_params(dec_div, iter_range):
+def make_params_old(dec_div, iter_range):
     iter_by = 1/dec_div
     params = []
     x_plot, y_plot = 0, 0
@@ -54,9 +57,31 @@ def make_params(dec_div, iter_range):
             y_plot += 1
         x_plot += 1
 
+#
+def make_params(x_root, y_root, spread_by, spread_iters):
+    total_distance = spread_by*spread_iters
+    running_x = x_root - total_distance
+    running_y = y_root - total_distance
+    x_plot, y_plot = 0, 0
+    for x in range(spread_iters):
+        for y in range(spread_iters):
+            yield (x_plot, y_plot, running_x, running_y)
+            running_x += spread_by
+            y_plot += 1
+        running_y += spread_by
+        x_plot += 1
+
+# for row in make_params(0, 0, 0.1, 10):
+#     print(row)
+# exit()
+
+
+
+
+
 p_log = []
 # Iterate, and calculate the error.
-for i, param in enumerate(make_params(100, 1)):
+for i, param in enumerate(make_params(2, 7, 0.01, 100)):
     x_val, y_val, x, y = param
     err = error(eq, x_val, y_val)
     # err = error(eq, x, y)
