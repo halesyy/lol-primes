@@ -89,7 +89,7 @@ def make_params(x_root, y_root, spread_by, spread_iters):
 
 p_log = []
 # Iterate, and calculate the error.
-for i, param in enumerate(make_params(4, 61, 0.1, 5)):
+for i, param in enumerate(make_params(4, 61.43, 0.01, 5)):
     x_val, y_val, x, y = param
     err = error(eq, x_val, y_val)
     # err = error(eq, x, y)
