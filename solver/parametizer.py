@@ -66,9 +66,10 @@ def make_params(x_root, y_root, spread_by, spread_iters):
     for x in range(spread_iters*2+1):
         for y in range(spread_iters*2+1):
             yield (running_x, running_y, x_plot, y_plot)
-            running_x += spread_by
+            running_y += spread_by
             y_plot += 1
-        running_y += spread_by
+        running_x += spread_by
+        running_y = y_root - total_distance # Reset.
         x_plot += 1
 
 # for row in make_params(0, 0, 0.1, 10):
@@ -81,7 +82,7 @@ def make_params(x_root, y_root, spread_by, spread_iters):
 
 p_log = []
 # Iterate, and calculate the error.
-for i, param in enumerate(make_params(2, 7, 0.01, 10)):
+for i, param in enumerate(make_params(2, 7, 0.01, 100)):
     x_val, y_val, x, y = param
     err = error(eq, x_val, y_val)
     # err = error(eq, x, y)
