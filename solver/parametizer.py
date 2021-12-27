@@ -37,8 +37,9 @@ def error(eq, x, y):
         iter_x += 1
     return running_error
 
-# print(error(eq, 2, 2))
-# exit()
+print(error(eq, 0.00001, 0.1))
+exit()
+
 # A generator which can yield parameters,
 # for a lower memory footprint.
 def make_params(dec_div, iter_range):
@@ -55,9 +56,10 @@ def make_params(dec_div, iter_range):
 
 p_log = []
 # Iterate, and calculate the error.
-for i, param in enumerate(make_params(10, 1)):
+for i, param in enumerate(make_params(100, 1)):
     x_val, y_val, x, y = param
     err = error(eq, x_val, y_val)
+    # err = error(eq, x, y)
     p_log.append([x_val, y_val, x, y, err])
 
 # Save param log.
