@@ -4,9 +4,12 @@ from time import sleep
 from py_expression_eval import Parser
 from math import ceil, floor
 parser = Parser()
-primes = json.loads(open("../datasets/primes.json", "r").read())
+primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
+# primes = json.loads(open("../datasets/primes.json", "r").read())
+primes = primes[0:2458]
 
 print(">", len(primes), "total primes")
+# exit()
 
 def eval(eq, sub):
     try:
@@ -24,6 +27,8 @@ Then, plot the results.
 # Equation used.
 eq = "x * log(x, y)"
 
+# Best for first 1,229 primes: 1.8778, 5.9901
+# Best for first 10,000 primes:
 
 def error(eq, x, y):
     # X = iter by. Running * x.
@@ -83,7 +88,7 @@ def make_params(x_root, y_root, spread_by, spread_iters):
 
 p_log = []
 # Iterate, and calculate the error.
-for i, param in enumerate(make_params(1.878, 5.991, 0.0001, 10)):
+for i, param in enumerate(make_params(0, 0, 1, 20)):
     x_val, y_val, x, y = param
     err = error(eq, x_val, y_val)
     # err = error(eq, x, y)
