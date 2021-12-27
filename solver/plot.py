@@ -13,9 +13,9 @@ def eval(ex, sub={}):
         return None
 
 # Data iq for iteration.
-primes = json.loads(open("../datasets/primes.json", "r").read())
+# primes = json.loads(open("../datasets/primes.json", "r").read())
 # primes = json.loads(open("../datasets/primes_test.json", "r").read())
-# primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
+primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
 # primes = json.loads(open("../datasets/downloaded/1m_primes.json", "r").read())
 print(">", len(primes), "total primes")
 # eq = "E + x * log(x, y) - 0.19430*x - 0.2832*x"
@@ -36,11 +36,12 @@ eq = "E+x*log(x, y)"
 
 # Equation setup.
 # iter_by = 0.7756046619718664
-iter_by = 2.02
+# ,
+iter_by = 1.878
 iter_x = 1
 # y_eq_sub = 1.9375616416890284
 # y_eq_sub = 2.406057707156924
-y_eq_sub = 6.99
+y_eq_sub = 5.991
 
 # Setup
 iterations = len(primes)
@@ -57,8 +58,8 @@ for i, ypm in zip(range(iterations), primes):
     diff = abs(y_val - ypm)
     plt_diff = y_val - ypm
     err_set += diff
-    if i % 30 == 0:
-        diffs += f"{i}\t{plt_diff}\n"
+    # if i % 30 == 0:
+    diffs += f"{i}\t{plt_diff}\n"
     # y_val *= -1
     created_primes.append(y_val)
     iter_x += 1 # +Inc.
