@@ -40,38 +40,101 @@ def error(series, eq, x, y):
     for i, prime in enumerate(series):
         x_val = iter_x * x
         y_val = eval(eq, {"x": x_val, "y": y})
-        if y_val == None: return ""
+        if y_val == None: return 1000000000
         error = abs(y_val - prime)
         running_error += error
         iter_x += 1
-    print(eq, ":", running_error)
+    # print(eq, ":", running_error)
     return running_error
 
 # Each x/y is ran through this matrix of addition,
 # then the lowest error value is picked.
-tests = [
-    [0,     0],
-    [0,     -0.01],
-    [-0.01, 0],
-    [0.01,  0],
-    [0,     0.01]
+all_tests = [
+    [
+        [0,     0],
+        [0,     -10],
+        [-10, 0],
+        [10,  0],
+        [0,     10]
+    ],
+    [
+        [0,     0],
+        [0,     -1],
+        [-1, 0],
+        [1,  0],
+        [0,     1]
+    ],
+    [
+        [0,     0],
+        [0,     -0.1],
+        [-0.1, 0],
+        [0.1,  0],
+        [0,     0.1]
+    ],
+    [
+        [0,     0],
+        [0,     -0.01],
+        [-0.01, 0],
+        [0.01,  0],
+        [0,     0.01]
+    ],
+    [
+        [0,     0],
+        [0,     -0.001],
+        [-0.001, 0],
+        [0.001,  0],
+        [0,     0.001]
+    ]
 ]
 
 def fit_for(all_primes, series_x):
+    # series_x, all_primes = i_all_primes
+    # print(series_x, len(all_primes))
+    # print("> working")
     addit = all_primes[series_x-1][-1] if series_x != 0 else 0
     series = all_primes[series_x]
     eq = f"x*log(x,y)+{addit}"
-    x, y = 2, 2
+    x, y = 1, 1
+    best_error_all = 10000000
+    # for i in range(10000):
+    for tests in all_tests:
+        hit_same = 0
+        # print(">", tests)
+        while True:
+            subbed_tests = [[x+test[0], y+test[1]] for test in tests]
+            test_errors = [error(series, eq, xy[0], xy[1]) for xy in subbed_tests]
+            best_index = test_errors.index(min(test_errors))
+            best_error = min(test_errors)
+            x, y = subbed_tests[best_index] # Replace x/y.
+            if best_error == best_error_all:
+                hit_same += 1
+            else:
+                hit_same = 0
+            if best_error < best_error_all:
+                best_error_all = best_error
+            if hit_same == 1:
+                break
+            # print(x, y)
+    # print(best_error, x, y)
+    return best_error_all, x, y
 
 
-    print(error(series, eq, x, y))
 
 
+if __name__ == "__main__":
+    from concurrent.futures import ThreadPoolExecutor
 
-# Intake primes.
-primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
-print(">", len(primes), "primes")
-primes = chunk(primes, 100)
+    # Intake primes.
+    primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
+    print(">", len(primes), "primes")
+    primes = chunk(primes, 100)
 
-# Step system for figuring out the best. Errors.
-fit_for(primes, 1)
+    # print(fit_for(primes, 0))
+    # exit()
+
+    # Step system for figuring out the best. Errors.
+    results = []
+    for i in range(len(primes)):
+        print("> starting", i, "/", len(primes))
+        results.append({"for": i, "err_x_y": fit_for(primes, i)})
+    open("reports/place_fit_best.json", "w").write(json.dumps(results, indent=4))
