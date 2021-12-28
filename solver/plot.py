@@ -13,8 +13,8 @@ def eval(ex, sub={}):
         return None
 
 # Data iq for iteration.
-primes = json.loads(open("../datasets/primes.json", "r").read())
-# primes = json.loads(open("../datasets/primes_test.json", "r").read())
+# primes = json.loads(open("../datasets/primes.json", "r").read())
+primes = json.loads(open("../datasets/primes_test.json", "r").read())
 # primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
 # primes = json.loads(open("../datasets/downloaded/1m_primes.json", "r").read())
 print(">", len(primes), "total primes")
@@ -27,7 +27,8 @@ print(">", len(primes), "total primes")
 # """
 
 # eq = "x*log(y,x)"
-eq = "E+x*log(x, y)"
+# eq = "E+x*log(x, y)"
+eq = "x*log(x, y)"
 
 #  - 0.08584*x + abs(1250*sin(1/50000 * PI * x))
 # eq = "x"
@@ -38,10 +39,12 @@ eq = "E+x*log(x, y)"
 # iter_by = 0.7756046619718664
 # ,
 iter_by = 1.878
+iter_by = 2
 iter_x = 1
 # y_eq_sub = 1.9375616416890284
 # y_eq_sub = 2.406057707156924
 y_eq_sub = 5.991
+y_eq_sub = 7
 
 # Setup
 iterations = len(primes)
@@ -50,6 +53,7 @@ created_primes = []
 
 # Create copy dataset.
 diffs = ""
+diffs_to_plot = []
 err_set = 0
 for i, ypm in zip(range(iterations), primes):
     x_val = iter_x*iter_by
@@ -60,12 +64,17 @@ for i, ypm in zip(range(iterations), primes):
     err_set += diff
     # if i % 30 == 0:
     diffs += f"{i}\t{plt_diff}\n"
+    diffs_to_plot.append(plt_diff)
     # y_val *= -1
     created_primes.append(y_val)
     iter_x += 1 # +Inc.
 
 print("> err:", err_set)
 open("diffs.txt", "w").write(diffs)
-plt.plot(range(len(primes)), primes, c="red")
-plt.plot(range(len(created_primes)), created_primes, c="blue")
+
+# plt.plot(range(len(primes)), primes, c="red")
+# plt.plot(range(len(created_primes)), created_primes, c="blue")
+# plt.show()
+
+plt.plot(range(len(diffs_to_plot)), diffs_to_plot)
 plt.show()
