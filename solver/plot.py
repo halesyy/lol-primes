@@ -13,8 +13,8 @@ def eval(ex, sub={}):
         return None
 
 # Data iq for iteration.
-# primes = json.loads(open("../datasets/primes.json", "r").read())
-primes = json.loads(open("../datasets/primes_test.json", "r").read())
+primes = json.loads(open("../datasets/primes.json", "r").read())
+# primes = json.loads(open("../datasets/primes_test.json", "r").read())
 # primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
 # primes = json.loads(open("../datasets/downloaded/1m_primes.json", "r").read())
 print(">", len(primes), "total primes")
@@ -72,9 +72,9 @@ for i, ypm in zip(range(iterations), primes):
 print("> err:", err_set)
 open("diffs.txt", "w").write(diffs)
 
-# plt.plot(range(len(primes)), primes, c="red")
-# plt.plot(range(len(created_primes)), created_primes, c="blue")
-# plt.show()
-
-plt.plot(range(len(diffs_to_plot)), diffs_to_plot)
+plt.plot(range(len(primes)), primes, c="red")
+plt.plot(range(len(created_primes)), created_primes, c="blue")
 plt.show()
+
+# plt.plot(range(len(diffs_to_plot)), diffs_to_plot)
+# plt.show()
