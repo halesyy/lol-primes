@@ -22,6 +22,7 @@ for i, y in enumerate(ys):
         same += 1
     else:
         print(y, same)
+        same = 0
 # print(y, same)
 
 plt.show()
