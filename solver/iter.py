@@ -26,6 +26,22 @@ primes_diff_diff_diff_diff = json.loads(open("../datasets/primes_diff_diff_diff_
 # - Regarding dist of primes, for n, the # of primes
 #   below it is ~ 1/ln(n), natural log. Eulers number. Interesting.
 
+# IDEAS:
+# - We've got multiple error functions for quickly assessing
+#   closeness to fit:
+#   1. Absolute difference: gets as close as you can get to
+#      fitting the curve totally.
+#   2. Relative delta: gets as close as you can get to the
+#      series rate of change at a top-level.
+#      This will compare % changes in the data point by point
+#      from the prior point. For y=x at 100, this is 101/100 (1%).
+#   3. (new) Absolute difference delta: compare the absolute
+#      differences to get close to the raw rate of change.
+#      This will compare the rate of change, the actual derivative,
+#      for example in y=x, at y=100, the absolute diff delta for the
+#      last two are 1, and 1, so our abs diff delta is 100% through
+#      the whole curve. Technically, this seems super smart to use.
+
 # Solve for:
 # - fx = x first.
 # - fx = 2x second.
