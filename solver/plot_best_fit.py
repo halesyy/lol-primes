@@ -9,9 +9,9 @@ berrs = [p[0] for p in plot_data]
 xs = [p[1] for p in plot_data]
 ys = [p[2] for p in plot_data]
 
-# plt.plot(range(len(berrs)), berrs, c="orange")
-plt.plot(range(len(xs)), xs, c="red")
-plt.plot(range(len(ys)), ys, c="blue")
+plt.plot(range(len(berrs)), berrs, c="orange")
+# plt.plot(range(len(xs)), xs, c="red")
+# plt.plot(range(len(ys)), ys, c="blue")
 
 same = 0
 for i, y in enumerate(ys):
@@ -21,8 +21,8 @@ for i, y in enumerate(ys):
     if ly == y:
         same += 1
     else:
-        print(y, same)
+        print(ly, same+1)
         same = 0
-# print(y, same)
+print(y, same)
 
 plt.show()

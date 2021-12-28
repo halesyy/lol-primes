@@ -67,7 +67,7 @@ all_tests = [
     [
         [0, 0],
         [0, -0.1],
-        [0, 0.1]
+        # [0, 0.1]
         # [0.1,  0],
         # [0,     0.1]
     ],
@@ -138,11 +138,12 @@ if __name__ == "__main__":
     from concurrent.futures import ThreadPoolExecutor
 
     # Intake primes.
-    primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
-    # print(">", len(primes), "primes")
+    # primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
+    primes = json.loads(open("../datasets/downloaded/1m_primes.json", "r").read())
+    print(">", len(primes), "primes")
     primes = chunk(primes, 100)
 
-    # print(fit_for(primes, 102))
+    # print(fit_for(primes, 9000))
     # exit()
 
     # Step system for figuring out the best. Errors.
