@@ -29,6 +29,17 @@ print(">", len(primes), "total primes")
 # eq = "x*log(y,x)"
 # eq = "E+x*log(x, y)"
 eq = "x*log(x, 7)"
+# * on eq, that = 1250 = 2, 2500 = 3, 3750 = 4
+# y on eq, that = 1250 = 7, 2500 =
+
+iter_by = 1.878
+# iter_by = 4
+iter_by = 2
+
+iter_x = 1
+
+# y_eq_sub = 5.991
+y_eq_sub = 7
 
 #  - 0.08584*x + abs(1250*sin(1/50000 * PI * x))
 # eq = "x"
@@ -38,13 +49,8 @@ eq = "x*log(x, 7)"
 # Equation setup.
 # iter_by = 0.7756046619718664
 # ,
-iter_by = 1.878
-iter_by = 2
-iter_x = 1
 # y_eq_sub = 1.9375616416890284
 # y_eq_sub = 2.406057707156924
-y_eq_sub = 5.991
-y_eq_sub = 7
 
 # Setup
 iterations = len(primes)
