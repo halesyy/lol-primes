@@ -13,8 +13,8 @@ def eval(ex, sub={}):
         return None
 
 # Data iq for iteration.
-primes = json.loads(open("../datasets/primes.json", "r").read())
-# primes = json.loads(open("../datasets/primes_test.json", "r").read())
+# primes = json.loads(open("../datasets/primes.json", "r").read())
+primes = json.loads(open("../datasets/primes_test.json", "r").read())
 # primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
 # primes = json.loads(open("../datasets/downloaded/1m_primes.json", "r").read())
 print(">", len(primes), "total primes")
@@ -28,7 +28,7 @@ print(">", len(primes), "total primes")
 
 # eq = "x*log(y,x)"
 # eq = "E+x*log(x, y)"
-eq = "x*log(x, y)"
+eq = "x*log(x, 7)"
 
 #  - 0.08584*x + abs(1250*sin(1/50000 * PI * x))
 # eq = "x"
