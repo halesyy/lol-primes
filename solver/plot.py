@@ -35,6 +35,7 @@ eq = "x*log(x, 7)"
 iter_by = 1.878
 # iter_by = 4
 iter_by = 2
+# iter_by = 1
 
 iter_x = 1
 

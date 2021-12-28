@@ -71,20 +71,20 @@ all_tests = [
         [0.1,  0],
         [0,     0.1]
     ],
-    [
-        [0,     0],
-        [0,     -0.01],
-        [-0.01, 0],
-        [0.01,  0],
-        [0,     0.01]
-    ],
-    [
-        [0,     0],
-        [0,     -0.001],
-        [-0.001, 0],
-        [0.001,  0],
-        [0,     0.001]
-    ]
+    # [
+    #     [0,     0],
+    #     [0,     -0.01],
+    #     [-0.01, 0],
+    #     [0.01,  0],
+    #     [0,     0.01]
+    # ],
+    # [
+    #     # [0,     0],
+    #     [0,     -0.001],
+    #     [-0.001, 0],
+    #     [0.001,  0],
+    #     [0,     0.001]
+    # ]
 ]
 
 def fit_for(all_primes, series_x):
@@ -92,8 +92,17 @@ def fit_for(all_primes, series_x):
     # print(series_x, len(all_primes))
     # print("> working")
     addit = all_primes[series_x-1][-1] if series_x != 0 else 0
-    series = all_primes[series_x]
-    eq = f"x*log(x,y)+{addit}"
+    # addit = all_primes[series_x][0] if series_x != 0 else 0
+    # series = all_primes[series_x]
+
+    series = all_primes[0:series_x+1]
+    full_series = []
+    for s in series:
+        full_series += s
+    series = full_series
+
+    # eq = f"x*log(x,y)+{addit}"
+    eq = "x*log(x,y)"
     x, y = 1, 1
     best_error_all = 10000000
     # for i in range(10000):
@@ -106,15 +115,16 @@ def fit_for(all_primes, series_x):
             best_index = test_errors.index(min(test_errors))
             best_error = min(test_errors)
             x, y = subbed_tests[best_index] # Replace x/y.
+            x, y = float("{:.2f}".format(x)), float("{:.2f}".format(y))
             if best_error == best_error_all:
                 hit_same += 1
             else:
                 hit_same = 0
             if best_error < best_error_all:
                 best_error_all = best_error
-            if hit_same == 1:
+            if hit_same == 3:
                 break
-            # print(x, y)
+            # print(best_error)
     # print(best_error, x, y)
     return best_error_all, x, y
 
@@ -129,12 +139,14 @@ if __name__ == "__main__":
     print(">", len(primes), "primes")
     primes = chunk(primes, 100)
 
-    # print(fit_for(primes, 0))
+    # print(fit_for(primes, 11))
     # exit()
 
     # Step system for figuring out the best. Errors.
     results = []
     for i in range(len(primes)):
-        print("> starting", i, "/", len(primes))
-        results.append({"for": i, "err_x_y": fit_for(primes, i)})
+        # print("> starting", i, "/", len(primes))
+        set_data = fit_for(primes, i)
+        results.append({"for": i, "err_x_y": set_data})
+        print("> finished", i, "/", len(primes), "d:", set_data)
     open("reports/place_fit_best.json", "w").write(json.dumps(results, indent=4))
