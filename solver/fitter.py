@@ -1,5 +1,7 @@
 
 import json
+from py_expression_eval import Parser
+parser = Parser()
 
 # Given n primes, say, the primes from
 # 1-100, we want to figure out what the
@@ -26,9 +28,50 @@ def chunk(li, amt=100):
         chunks.append(li[i:i+amt])
     return chunks
 
+def eval(eq, sub):
+    try:
+        return parser.parse(eq).evaluate(sub)
+    except:
+        return None
+
+def error(series, eq, x, y):
+    iter_x = 1
+    running_error = 0
+    for i, prime in enumerate(series):
+        x_val = iter_x * x
+        y_val = eval(eq, {"x": x_val, "y": y})
+        if y_val == None: return ""
+        error = abs(y_val - prime)
+        running_error += error
+        iter_x += 1
+    print(eq, ":", running_error)
+    return running_error
+
+# Each x/y is ran through this matrix of addition,
+# then the lowest error value is picked.
+tests = [
+    [0,     0],
+    [0,     -0.01],
+    [-0.01, 0],
+    [0.01,  0],
+    [0,     0.01]
+]
+
+def fit_for(all_primes, series_x):
+    addit = all_primes[series_x-1][-1] if series_x != 0 else 0
+    series = all_primes[series_x]
+    eq = f"x*log(x,y)+{addit}"
+    x, y = 2, 2
+
+
+    print(error(series, eq, x, y))
+
+
+
 # Intake primes.
 primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
-primes = chunk(primes, 100)
 print(">", len(primes), "primes")
+primes = chunk(primes, 100)
 
 # Step system for figuring out the best. Errors.
+fit_for(primes, 1)
