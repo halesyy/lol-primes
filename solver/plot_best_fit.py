@@ -13,4 +13,15 @@ ys = [p[2] for p in plot_data]
 plt.plot(range(len(xs)), xs, c="red")
 plt.plot(range(len(ys)), ys, c="blue")
 
+same = 0
+for i, y in enumerate(ys):
+    if i == 0:
+        continue
+    ly = ys[i-1]
+    if ly == y:
+        same += 1
+    else:
+        print(y, same)
+# print(y, same)
+
 plt.show()
