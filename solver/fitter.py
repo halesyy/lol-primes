@@ -192,7 +192,8 @@ def fit_for(all_primes, series_x, last_x=False, last_y=False):
         hit_same = 0
         # print(">", tests)
         while True:
-            subbed_tests = [[x+test[0], y+test[1]] for test in tests]
+            # subbed_tests = [[x+test[0], y+test[1]] for test in tests]
+            subbed_tests = [[x+test[0], y] for test in tests]
             test_errors = [error(series, eq, x=xy[0], y=xy[1], iter_x=iter_x) for xy in subbed_tests]
             best_index = test_errors.index(min(test_errors))
             best_error = min(test_errors)
@@ -235,20 +236,20 @@ if __name__ == "__main__":
 
     # Step system for figuring out the best. Errors.
     results = []
-    # results = json.loads(open("reports/place_fit_best_2.json", "r").read())
+    # results = json.loads(open("reports/place_fit_best_2_7log.json", "r").read())
 
     is_done = [r["for"] for r in results]
-    last_x, last_y = 1, 1
     for i in range(len(primes)):
         if i in is_done:
             # print("> skipping", i)
             continue
         # print("> starting", i, "/", len(primes))
+        last_x, last_y = 0, 7
         set_data = fit_for(primes, i, last_x=last_x, last_y=last_y)
         last_x, last_y = set_data[1:]
         results.append({"for": i, "err_x_y": set_data})
         print("> finished", i, "/", len(primes), "d:", set_data)
 
-        if i % 100 == 0:
-            open("reports/place_fit_best_2.json", "w").write(json.dumps(results, indent=4))
-    open("reports/place_fit_best_2.json", "w").write(json.dumps(results, indent=4))
+        if i % 1000 == 0:
+            open("reports/place_fit_best_2_7log.json", "w").write(json.dumps(results))
+    open("reports/place_fit_best_2_7log.json", "w").write(json.dumps(results))

@@ -12,6 +12,15 @@ primes_diff_diff = json.loads(open("../datasets/primes_diff_diff.json", "r").rea
 primes_diff_diff_diff = json.loads(open("../datasets/primes_diff_diff_diff.json", "r").read())
 primes_diff_diff_diff_diff = json.loads(open("../datasets/primes_diff_diff_diff_diff.json", "r").read())
 
+# px_to_fit = [p["err_x_y"][1] for p in px_to_fit]
+# px_to_fit = json.loads(open("reports/place_fit_best_2_7log.json", "r").read())
+# ref roc: x/x/x, pi/x, e/x, e*pi/x
+
+px_to_fit = json.loads(open("reports/interpret_x_real_sub.json", "r").read())[0:10000]
+
+# print(px_to_fit[0:10])
+# exit()
+
 # Current state:
 # https://www.quora.com/Could-you-train-a-machine-learner-to-predict-the-next-prime-number-I-know-there-is-no-pattern-to-PNs-I-am-wondering-if-the-ML-would-figure-it-out
 
@@ -78,6 +87,7 @@ meta = {
         "cos(x)",
         "tan(x)",
         "log(x, y)",
+        "log(x, 7)",
         "log(x)",
     ]
 }
@@ -163,14 +173,16 @@ def make_eq():
     else:
         return equation
 
-best_error = 1000000000
+# best_error = 1000000000
+best_error = float("inf")
 
 def series_explode(eq):
     global best_error
 
     # All series to test.
     test_series = [
-        primes,
+        # primes,
+        px_to_fit,
         # primes_diff,
         # primes_diff,
         # primes_diff_diff,
@@ -237,7 +249,7 @@ def iterator():
     while True:
         eq = make_eq()
         # eq = "E + x * log(x, y)"
-        eq = "E + x * log(x, y) - 0.08584*x"
+        # eq = "E + x * log(x, y) - 0.08584*x"
         # eq = "PI * sin(x) * tan(x) - -132.24582462308788 * tan(x)"
         # eq = "E + x * log(x, y)"
         # eq = "x / PI * E - log(x, y)"
@@ -250,7 +262,7 @@ from multiprocessing import Process
 
 if __name__ == "__main__":
     workers = []
-    for _ in range(5):
+    for _ in range(3):
         workers.append(Process(target=iterator))
     for task in workers:
         task.start()
