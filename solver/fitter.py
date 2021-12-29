@@ -50,34 +50,34 @@ def error(series, eq, x, y):
 # Each x/y is ran through this matrix of addition,
 # then the lowest error value is picked.
 all_tests = [
-    # [
-    #     [0,     0],
-    #     [0,     -10],
-    #     [-10, 0],
-    #     [10,  0],
-    #     [0,     10]
-    # ],
-    # [
-    #     [0,     0],
-    #     [0,     -1],
-    #     [-1, 0],
-    #     [1,  0],
-    #     [0,     1]
-    # ],
+    [
+        [0,     0],
+        [0,     -10],
+        [-10, 0],
+        [10,  0],
+        [0,     10]
+    ],
+    [
+        [0,     0],
+        [0,     -1],
+        [-1, 0],
+        [1,  0],
+        [0,     1]
+    ],
     [
         [0, 0],
         [0, -0.1],
-        # [0, 0.1]
-        # [0.1,  0],
-        # [0,     0.1]
+        [-0.1, 0]
+        [0.1, 0],
+        [0, 0.1]
     ],
-    # [
-    #     [0,     0],
-    #     [0,     -0.01],
-    #     [-0.01, 0],
-    #     [0.01,  0],
-    #     [0,     0.01]
-    # ],
+    [
+        [0,     0],
+        [0,     -0.01],
+        [-0.01, 0],
+        [0.01,  0],
+        [0,     0.01]
+    ],
     # [
     #     # [0,     0],
     #     [0,     -0.001],
@@ -88,12 +88,8 @@ all_tests = [
 ]
 
 def fit_for(all_primes, series_x):
-    # series_x, all_primes = i_all_primes
-    # print(series_x, len(all_primes))
-    # print("> working")
     addit = all_primes[series_x-1][-1] if series_x != 0 else 0
     # addit = all_primes[series_x][0] if series_x != 0 else 0
-    # series = all_primes[series_x]
 
     series = all_primes[0:series_x+1]
     full_series = []
@@ -101,10 +97,12 @@ def fit_for(all_primes, series_x):
         full_series += s
     series = full_series
 
-    # eq = f"x*log(x,y)+{addit}"
-    eq = "x*log(x,y)"
-    # x, y = 1, 1
-    x, y = 2, 6.6
+    eq = f"x*log(x,y)+{addit}" # Fix to prior y-plane.
+    # eq = "x*log(x,y)"
+
+    # x, y = 2, 6.6
+    x, y = 1, 1
+
     best_error_all = float("inf") # Everything is < than.
     # for i in range(10000):
     for tests in all_tests:
@@ -143,8 +141,8 @@ if __name__ == "__main__":
     print(">", len(primes), "primes")
     primes = chunk(primes, 100)
 
-    # print(fit_for(primes, 9000))
-    # exit()
+    print(fit_for(primes, 50))
+    exit()
 
     # Step system for figuring out the best. Errors.
     # results = []
