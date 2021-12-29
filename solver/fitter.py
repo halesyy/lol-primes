@@ -34,8 +34,8 @@ def eval(eq, sub):
     except:
         return None
 
-def error(series, eq, x, y):
-    iter_x = 1
+def error(series, eq, x, y, iter_x=1):
+    iter_x = iter_x
     running_error = 0
     for i, prime in enumerate(series):
         x_val = iter_x * x
@@ -50,27 +50,55 @@ def error(series, eq, x, y):
 # Each x/y is ran through this matrix of addition,
 # then the lowest error value is picked.
 all_tests = [
-    [
-        [0,     0],
-        [0,     -10],
-        [-10, 0],
-        [10,  0],
-        [0,     10]
-    ],
-    [
-        [0,     0],
-        [0,     -1],
-        [-1, 0],
-        [1,  0],
-        [0,     1]
-    ],
+    # [
+    #     [0,     0],
+    #     [0,     -10000],
+    #     [-10000, 0],
+    #     [10000,  0],
+    #     [0,     10000]
+    # ],
+    # [
+    #     [0,     0],
+    #     [0,     -1000],
+    #     [-1000, 0],
+    #     [1000,  0],
+    #     [0,     1000]
+    # ],
+    # [
+    #     [0,     0],
+    #     [0,     -100],
+    #     [-100, 0],
+    #     [100,  0],
+    #     [0,     100]
+    # ],
+    # [
+    #     [0,     0],
+    #     [0,     -10],
+    #     [-10, 0],
+    #     [10,  0],
+    #     [0,     10]
+    # ],
+    # [
+    #     [0,     0],
+    #     [0,     -1],
+    #     [-1, 0],
+    #     [1,  0],
+    #     [0,     1]
+    # ],
     [
         [0, 0],
         [0, -0.1],
-        [-0.1, 0]
+        [-0.1, 0],
         [0.1, 0],
         [0, 0.1]
     ],
+    # [
+    #     [1, 1],
+    #     [1, -1.1],
+    #     [-1.1, 1],
+    #     [1.1, 1],
+    #     [0, 0.1]
+    # ],
     [
         [0,     0],
         [0,     -0.01],
@@ -78,30 +106,84 @@ all_tests = [
         [0.01,  0],
         [0,     0.01]
     ],
-    # [
-    #     # [0,     0],
-    #     [0,     -0.001],
-    #     [-0.001, 0],
-    #     [0.001,  0],
-    #     [0,     0.001]
-    # ]
+    [
+        [0,     0],
+        [0,     -0.001],
+        [-0.001, 0],
+        [0.001,  0],
+        [0,     0.001]
+    ],
+    # [ # A multiplier.
+    #     [1,     1],
+    #     [1,     0.999],
+    #     [0.999, 1],
+    #     [1.001,  1],
+    #     [1,     1.001]
+    # ],
+    [
+        [0,     0],
+        [0,     -0.0001],
+        [-0.0001, 0],
+        [0.0001,  0],
+        [0,     0.0001]
+    ],
+    [
+        [0,     0],
+        [0,     -0.00001],
+        [-0.00001, 0],
+        [0.00001,  0],
+        [0,     0.00001]
+    ],
+    [
+        # [0,     0],
+        [0,     -0.000001],
+        [-0.000001, 0],
+        [0.000001,  0],
+        [0,     0.000001]
+    ],
+    [
+        # [0,     0],
+        [0,     -0.0000001],
+        [-0.0000001, 0],
+        [0.0000001,  0],
+        [0,     0.0000001]
+    ],
+    [
+        # [0,     0],
+        [0,     -0.00000001],
+        [-0.00000001, 0],
+        [0.00000001,  0],
+        [0,     0.00000001]
+    ],
+    [
+        # [0,     0],
+        [0,     -0.000000001],
+        [-0.000000001, 0],
+        [0.000000001,  0],
+        [0,     0.000000001]
+    ]
 ]
 
-def fit_for(all_primes, series_x):
+
+def fit_for(all_primes, series_x, last_x=False, last_y=False):
     addit = all_primes[series_x-1][-1] if series_x != 0 else 0
+    iter_x = (series_x*GROUP_PRIMES)+1
     # addit = all_primes[series_x][0] if series_x != 0 else 0
 
-    series = all_primes[0:series_x+1]
-    full_series = []
-    for s in series:
-        full_series += s
-    series = full_series
+    # series = all_primes[0:series_x+1]
+    series = all_primes[series_x]
+    # full_series = []
+    # for s in series:
+    #     full_series += s
+    # series = full_series
 
     eq = f"x*log(x,y)+{addit}" # Fix to prior y-plane.
     # eq = "x*log(x,y)"
 
     # x, y = 2, 6.6
-    x, y = 1, 1
+    # x, y = 1, 1
+    x = last_x if last_x != False else 1
+    y = last_y if last_y != False else 1
 
     best_error_all = float("inf") # Everything is < than.
     # for i in range(10000):
@@ -110,11 +192,11 @@ def fit_for(all_primes, series_x):
         # print(">", tests)
         while True:
             subbed_tests = [[x+test[0], y+test[1]] for test in tests]
-            test_errors = [error(series, eq, xy[0], xy[1]) for xy in subbed_tests]
+            test_errors = [error(series, eq, x=xy[0], y=xy[1], iter_x=iter_x) for xy in subbed_tests]
             best_index = test_errors.index(min(test_errors))
             best_error = min(test_errors)
             x, y = subbed_tests[best_index] # Replace x/y.
-            x, y = float("{:.2f}".format(x)), float("{:.2f}".format(y))
+            x, y = float("{:.11f}".format(x)), float("{:.11f}".format(y))
             best_error = int(best_error)
             if best_error == best_error_all:
                 hit_same += 1
@@ -122,38 +204,46 @@ def fit_for(all_primes, series_x):
                 hit_same = 0
             if best_error < best_error_all:
                 best_error_all = best_error
-            if hit_same == 1:
+            if hit_same == 2:
                 break
             # print(x, y, best_error)
             # print(best_error, best_error_all)
-    # print(best_error, x, y)
+            # print(best_error_all, x, y)
     return best_error_all, x, y
 
 
 
 
 if __name__ == "__main__":
+    GROUP_PRIMES = 10
+
     from concurrent.futures import ThreadPoolExecutor
 
     # Intake primes.
     # primes = json.loads(open("../datasets/primes_1m_test.json", "r").read())
     primes = json.loads(open("../datasets/downloaded/1m_primes.json", "r").read())
     print(">", len(primes), "primes")
-    primes = chunk(primes, 100)
+    primes = chunk(primes, GROUP_PRIMES)
 
-    print(fit_for(primes, 50))
-    exit()
+    # Iter_x is hard-coded in fit-for.
+    # print(fit_for(primes, 6))
+    # exit()
 
     # Step system for figuring out the best. Errors.
     # results = []
     results = json.loads(open("reports/place_fit_best.json", "r").read())
+
     is_done = [r["for"] for r in results]
+    last_x, last_y = 0.000184322, 85.778222506
     for i in range(len(primes)):
         if i in is_done:
-            print("> skipping", i)
+            # print("> skipping", i)
             continue
         # print("> starting", i, "/", len(primes))
-        set_data = fit_for(primes, i)
+        set_data = fit_for(primes, i, last_x=last_x, last_y=last_y)
+        last_x, last_y = set_data[1:]
         results.append({"for": i, "err_x_y": set_data})
         print("> finished", i, "/", len(primes), "d:", set_data)
-        open("reports/place_fit_best.json", "w").write(json.dumps(results, indent=4))
+        if i % 100 == 0:
+            open("reports/place_fit_best.json", "w").write(json.dumps(results, indent=4))
+    open("reports/place_fit_best.json", "w").write(json.dumps(results, indent=4))
