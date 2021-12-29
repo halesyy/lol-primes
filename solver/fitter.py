@@ -1,6 +1,7 @@
 
 import json
 from py_expression_eval import Parser
+from random import randint, gauss
 parser = Parser()
 
 # Given n primes, say, the primes from
@@ -78,13 +79,13 @@ all_tests = [
     #     [10,  0],
     #     [0,     10]
     # ],
-    # [
-    #     [0,     0],
-    #     [0,     -1],
-    #     [-1, 0],
-    #     [1,  0],
-    #     [0,     1]
-    # ],
+    [
+        [0,     0],
+        [0,     -1],
+        [-1, 0],
+        [1,  0],
+        [0,     1]
+    ],
     [
         [0, 0],
         [0, -0.1],
@@ -215,7 +216,7 @@ def fit_for(all_primes, series_x, last_x=False, last_y=False):
 
 
 if __name__ == "__main__":
-    GROUP_PRIMES = 10
+    GROUP_PRIMES = 2
 
     from concurrent.futures import ThreadPoolExecutor
 
@@ -226,15 +227,18 @@ if __name__ == "__main__":
     primes = chunk(primes, GROUP_PRIMES)
 
     # Iter_x is hard-coded in fit-for.
-    # print(fit_for(primes, 6))
+    # for _ in range(100):
+    #     rx, ry = randint(1, 10000), randint(1, 10000)
+    #     rx, ry = abs(gauss(1, 10000)), abs(gauss(1, 10000))
+    #     print(fit_for(primes, 52, last_x=rx, last_y=ry))
     # exit()
 
     # Step system for figuring out the best. Errors.
-    # results = []
-    results = json.loads(open("reports/place_fit_best.json", "r").read())
+    results = []
+    # results = json.loads(open("reports/place_fit_best_2.json", "r").read())
 
     is_done = [r["for"] for r in results]
-    last_x, last_y = 0.000184322, 85.778222506
+    last_x, last_y = 1, 1
     for i in range(len(primes)):
         if i in is_done:
             # print("> skipping", i)
@@ -244,6 +248,7 @@ if __name__ == "__main__":
         last_x, last_y = set_data[1:]
         results.append({"for": i, "err_x_y": set_data})
         print("> finished", i, "/", len(primes), "d:", set_data)
+
         if i % 100 == 0:
-            open("reports/place_fit_best.json", "w").write(json.dumps(results, indent=4))
-    open("reports/place_fit_best.json", "w").write(json.dumps(results, indent=4))
+            open("reports/place_fit_best_2.json", "w").write(json.dumps(results, indent=4))
+    open("reports/place_fit_best_2.json", "w").write(json.dumps(results, indent=4))
