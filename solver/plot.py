@@ -22,8 +22,9 @@ print(">", len(primes), "total primes")
 
 # The equation itself, woo!
 eq = "x*log(x, 7)"
+eq = "x*log(3*log(x, 7), 7)"
 
-iter_by = 2
+iter_by = 7
 iter_x = 1
 y_eq_sub = 7
 
