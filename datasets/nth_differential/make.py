@@ -13,14 +13,18 @@ primes = json.loads(open("../primes_1m_test.json", "r").read())
 
 to_plot = []
 
-for nth_diff in range(1000):
+for nth_diff in range(1500):
     nth_diff = nth_diff + 1
     # primes = primes[0:nth_diff]
     working_diff = [p for p in primes[0:nth_diff]]
     # print(nth_diff, len(working_diff))
     for i in range(nth_diff):
-        if i >= nth_diff-5:
-            print(f"> First 10 diffs at n={i}: {list(working_diff[0:10])}")
+        # over_2 = True if len([True for p in working_diff if p > 2]) > 0 else False
+        # if over_2:
+        #     print(f"> {i} @ nth_diff {nth_diff} is over 2")
+        over_2 = False
+        if i >= nth_diff-10:
+            print(f"> First 10 diffs at n={i}: {list(working_diff[0:10])} {over_2}")
         working_diff = numpy.diff(working_diff)
         working_diff = [abs(p) for p in working_diff]
         to_plot.append([range(len(working_diff)), working_diff])
